@@ -1,11 +1,155 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>TONO Audio Channel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コロ助のジャンクオーディオライブラリー</title>
+<style>
+  :root {
+    --bg: #1a1512;
+    --bg-panel: #241d18;
+    --accent: #c97a3d;
+    --accent-light: #e0985c;
+    --text: #f0e6d8;
+    --text-dim: #b8a894;
+    --border: #3d332a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    line-height: 1.8;
+  }
+
+  header {
+    background: linear-gradient(135deg, #c97a3d 0%, #8a4f24 100%);
+    padding: 48px 20px;
+    text-align: center;
+    border-bottom: 4px solid var(--accent-light);
+  }
+
+  header h1 {
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    color: #1a1512;
+    letter-spacing: 0.05em;
+  }
+
+  header p {
+    color: #2e2016;
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  section {
+    margin-bottom: 56px;
+  }
+
+  h2 {
+    color: var(--accent-light);
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  .profile p {
+    color: var(--text-dim);
+  }
+
+  .videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .video-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .video-card iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    border: none;
+  }
+
+  .music-box {
+    background: var(--bg-panel);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    color: var(--text-dim);
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  a { color: var(--accent-light); }
+</style>
 </head>
 <body>
-  <h1>ただいま準備中です</h1>
-  <p>YouTubeチャンネルのホームページを作成中です。</p>
+
+<header>
+  <h1>コロ助のジャンクオーディオライブラリー</h1>
+  <p>Corosuke's Vintage Junk Audio Library &amp; Repair</p>
+</header>
+
+<main>
+
+  <section class="profile">
+    <h2>ABOUT</h2>
+    <p>
+      ヴィンテージオーディオのジャンク品を、簡単な修理とメンテナンスで蘇らせていくライブラリーです。<br>
+      「お気に入りのアンプが壊れたとき、自分で簡単な修理くらいはできるようになりたい」<br>
+      「予算をかけずに、自分好みのオーディオシステムを見つけたい」<br>
+      そんな想いで、修理の記録や、修理前後の音の比較などをお届けしています。<br>
+      誰かのオーディオ修理やシステム構築のヒントになれば嬉しいです。
+    </p>
+  </section>
+
+  <section class="videos-section">
+    <h2>VIDEOS</h2>
+    <div class="videos">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/DsxyIBC1ErY" allowfullscreen></iframe>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/FRVsGptH3lg" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="music">
+    <h2>MUSIC</h2>
+    <div class="music-box">
+      自作楽曲の無料ダウンロードコーナー、準備中です。
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; Corosuke's Vintage Junk Audio Library
+</footer>
+
 </body>
 </html>
