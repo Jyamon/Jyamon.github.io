@@ -1,3 +1,4 @@
+2026-10-13 | 囲む会 会場: ○○ホール https://tabelog.com/osaka/A2701/A270106/27130454/ 開場18:00
 # ライブ情報の書き方: 「日付 | 内容」を1行ずつ。
 # 予約をやめるときは、下の「予約URL」の行の先頭に # を付けてください。
 予約URL | https://docs.google.com/forms/d/e/1FAIpQLSfncNUvIOJRr2QzPuKPFsuxfnKfMR3Xpr2cRAGa7UgDOX4Vvw/viewform
