@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>コロ助のジャンクオーディオライブラリー</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="コロ助ライブラリー">
+<meta name="theme-color" content="#1a1512">
 <style>
   :root {
     --bg: #1a1512;
@@ -191,6 +195,57 @@
     text-align: center;
   }
 
+  .news-list {
+    list-style: none;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 20px;
+  }
+
+  .news-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .news-list li:last-child { border-bottom: none; }
+  .news-list li[hidden] { display: none; }
+
+  .news-date {
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    flex: 0 0 auto;
+    min-width: 6.5em;
+  }
+
+  .news-text {
+    flex: 1 1 220px;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .news-empty {
+    color: var(--text-dim);
+  }
+
+  .news-more {
+    display: block;
+    margin: 14px auto 0;
+    background: transparent;
+    color: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .news-more[hidden] { display: none; }
+
   footer {
     text-align: center;
     padding: 24px;
@@ -230,6 +285,12 @@
 </header>
 
 <main>
+
+  <section class="news" id="news">
+    <h2>NEWS</h2>
+    <ul class="news-list" id="news-list"></ul>
+    <button class="news-more" id="news-more" type="button" hidden>もっと見る</button>
+  </section>
 
   <section class="profile">
     <h2>ABOUT</h2>
@@ -319,6 +380,70 @@
 <footer>
   &copy; Corosuke's Vintage Junk Audio Library
 </footer>
+
+<script>
+(function () {
+  var LIMIT = 5;
+  var section = document.getElementById('news');
+  var list = document.getElementById('news-list');
+  var more = document.getElementById('news-more');
+  if (!list) return;
+
+  function render(text) {
+    var items = text.split(/\r?\n/)
+      .map(function (l) { return l.trim(); })
+      .filter(function (l) { return l && l.charAt(0) !== '#'; })
+      .map(function (l) {
+        var i = l.indexOf('|');
+        if (i === -1) return { date: '', text: l };
+        return { date: l.slice(0, i).trim(), text: l.slice(i + 1).trim() };
+      });
+
+    list.innerHTML = '';
+
+    if (!items.length) {
+      var empty = document.createElement('li');
+      empty.className = 'news-empty';
+      empty.textContent = 'お知らせはまだありません。';
+      list.appendChild(empty);
+      return;
+    }
+
+    items.forEach(function (it, n) {
+      var li = document.createElement('li');
+      if (n >= LIMIT) li.hidden = true;
+      if (it.date) {
+        var d = document.createElement('span');
+        d.className = 'news-date';
+        d.textContent = it.date;
+        li.appendChild(d);
+      }
+      var t = document.createElement('span');
+      t.className = 'news-text';
+      t.textContent = it.text;
+      li.appendChild(t);
+      list.appendChild(li);
+    });
+
+    if (items.length > LIMIT) {
+      more.hidden = false;
+      more.textContent = 'もっと見る (' + (items.length - LIMIT) + '件)';
+      more.onclick = function () {
+        var rest = list.querySelectorAll('li[hidden]');
+        for (var k = 0; k < rest.length; k++) rest[k].hidden = false;
+        more.hidden = true;
+      };
+    }
+  }
+
+  // 1分ごとに別のURLとして読み込み、古い表示が残らないようにする
+  var url = 'news.txt?t=' + Math.floor(Date.now() / 60000);
+  fetch(url, { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(render)
+    .catch(function () { if (section) section.hidden = true; });
+})();
+</script>
 
 </body>
 </html>
