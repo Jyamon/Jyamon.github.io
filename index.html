@@ -246,6 +246,47 @@
 
   .news-more[hidden] { display: none; }
 
+  .live-list {
+    list-style: none;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 20px;
+  }
+
+  .live-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .live-list li:last-child { border-bottom: none; }
+
+  .live-btn {
+    display: block;
+    width: fit-content;
+    margin: 16px auto 0;
+    background: var(--accent);
+    color: #1a1512;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    padding: 10px 28px;
+  }
+
+  .live-btn:hover { background: var(--accent-light); }
+
+  .live-note {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  [hidden] { display: none !important; }
+
   footer {
     text-align: center;
     padding: 24px;
@@ -262,6 +303,7 @@
 <header>
   <div class="header-icon">
     <svg width="90" height="90" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- leaf crown -->
       <g fill="#3f7a3a" stroke="#1f3d1e" stroke-width="1.5">
         <polygon points="50,8 56,26 44,26" />
         <polygon points="34,12 44,28 30,26" />
@@ -269,12 +311,17 @@
         <polygon points="22,22 36,32 24,36" />
         <polygon points="78,22 76,36 64,32" />
       </g>
+      <!-- corn center -->
       <ellipse cx="50" cy="24" rx="14" ry="7" fill="#f4c430" stroke="#1f3d1e" stroke-width="1.5"/>
+      <!-- head -->
       <circle cx="50" cy="52" r="34" fill="#d8e08a" stroke="#333" stroke-width="1.8"/>
+      <!-- cheeks -->
       <circle cx="30" cy="58" r="5" fill="#f6a0b5"/>
       <circle cx="70" cy="58" r="5" fill="#f6a0b5"/>
+      <!-- eyes -->
       <circle cx="36" cy="48" r="3" fill="#1a1a1a"/>
       <circle cx="64" cy="48" r="3" fill="#1a1a1a"/>
+      <!-- beak/mouth -->
       <ellipse cx="50" cy="60" rx="7" ry="5" fill="#f4c430" stroke="#333" stroke-width="1.2"/>
       <ellipse cx="50" cy="66" rx="6" ry="4.5" fill="#f4c430" stroke="#333" stroke-width="1.2"/>
     </svg>
@@ -290,6 +337,13 @@
     <h2>NEWS</h2>
     <ul class="news-list" id="news-list"></ul>
     <button class="news-more" id="news-more" type="button" hidden>もっと見る</button>
+  </section>
+
+  <section class="live" id="live" hidden>
+    <h2>LIVE</h2>
+    <ul class="live-list" id="live-list"></ul>
+    <a class="live-btn" id="live-btn" href="#" target="_blank" rel="noopener" hidden>ライブの予約はこちら</a>
+    <p class="live-note" id="live-note" hidden>入口フォームにメールアドレスを入力すると、申込みフォームのURLがメールで届きます。</p>
   </section>
 
   <section class="profile">
@@ -442,6 +496,60 @@
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
     .then(render)
     .catch(function () { if (section) section.hidden = true; });
+})();
+
+(function () {
+  var section = document.getElementById('live');
+  var list = document.getElementById('live-list');
+  var btn = document.getElementById('live-btn');
+  var note = document.getElementById('live-note');
+  if (!section || !list) return;
+
+  function render(text) {
+    var reserveUrl = '';
+    var items = [];
+    text.split(/\r?\n/).forEach(function (raw) {
+      var l = raw.trim();
+      if (!l || l.charAt(0) === '#') return;
+      var i = l.indexOf('|');
+      if (i === -1) { items.push({ date: '', text: l }); return; }
+      var head = l.slice(0, i).trim();
+      var rest = l.slice(i + 1).trim();
+      if (head === '予約URL') { reserveUrl = rest; return; }
+      items.push({ date: head, text: rest });
+    });
+
+    list.innerHTML = '';
+    items.forEach(function (it) {
+      var li = document.createElement('li');
+      if (it.date) {
+        var d = document.createElement('span');
+        d.className = 'news-date';
+        d.textContent = it.date;
+        li.appendChild(d);
+      }
+      var t = document.createElement('span');
+      t.className = 'news-text';
+      t.textContent = it.text;
+      li.appendChild(t);
+      list.appendChild(li);
+    });
+
+    // https:// で始まるURLだけをボタンにする
+    if (/^https:\/\//.test(reserveUrl)) {
+      btn.href = reserveUrl;
+      btn.hidden = false;
+      note.hidden = false;
+    }
+
+    if (items.length || !btn.hidden) section.hidden = false;
+  }
+
+  var url = 'live.txt?t=' + Math.floor(Date.now() / 60000);
+  fetch(url, { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(render)
+    .catch(function () { section.hidden = true; });
 })();
 </script>
 
