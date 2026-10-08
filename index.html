@@ -132,6 +132,65 @@
     color: var(--text-dim);
   }
 
+  .music-group-title {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin: 28px 0 14px;
+  }
+
+  .music-group-title:first-child {
+    margin-top: 0;
+  }
+
+  .track {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .track-name {
+    color: var(--text);
+    font-size: 0.98rem;
+    min-width: 160px;
+    flex: 1 1 160px;
+  }
+
+  .track audio {
+    flex: 2 1 260px;
+    min-width: 220px;
+    height: 34px;
+  }
+
+  .track-dl {
+    flex: 0 0 auto;
+    background: var(--accent);
+    color: #1a1512;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .track-dl:hover {
+    background: var(--accent-light);
+  }
+
+  .license-note {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin-top: 20px;
+    text-align: center;
+  }
+
   footer {
     text-align: center;
     padding: 24px;
@@ -197,9 +256,62 @@
 
   <section class="music">
     <h2>MUSIC</h2>
-    <div class="music-box">
-      自作楽曲の無料ダウンロードコーナー、準備中です。
+
+    <div class="music-group-title">― 作品 ―</div>
+
+    <div class="track">
+      <div class="track-name">越えてゆけ (Go Beyond)</div>
+      <audio controls src="01-koete-yuke.mp3"></audio>
+      <a class="track-dl" href="01-koete-yuke.mp3" download>ダウンロード</a>
     </div>
+
+    <div class="track">
+      <div class="track-name">遠くて近い その場所の君と</div>
+      <audio controls src="02-tookute-chikai.mp3"></audio>
+      <a class="track-dl" href="02-tookute-chikai.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="track">
+      <div class="track-name">描きかけのストーリー</div>
+      <audio controls src="03-egakikake-no-story.mp3"></audio>
+      <a class="track-dl" href="03-egakikake-no-story.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="track">
+      <div class="track-name">旅鳥 (Tabidori)</div>
+      <audio controls src="04-tabidori.mp3"></audio>
+      <a class="track-dl" href="04-tabidori.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="music-group-title">― サウンドチェック用 (Instrumental) ―</div>
+
+    <div class="track">
+      <div class="track-name">低域チェック</div>
+      <audio controls src="05-check-teiiki.mp3"></audio>
+      <a class="track-dl" href="05-check-teiiki.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="track">
+      <div class="track-name">定位チェック</div>
+      <audio controls src="06-check-teii.mp3"></audio>
+      <a class="track-dl" href="06-check-teii.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="track">
+      <div class="track-name">評価用 Jazzy Rock</div>
+      <audio controls src="07-check-jazzyrock.mp3"></audio>
+      <a class="track-dl" href="07-check-jazzyrock.mp3" download>ダウンロード</a>
+    </div>
+
+    <div class="track">
+      <div class="track-name">評価用 クラシック</div>
+      <audio controls src="08-check-classic.mp3"></audio>
+      <a class="track-dl" href="08-check-classic.mp3" download>ダウンロード</a>
+    </div>
+
+    <p class="license-note">
+      すべて自作楽曲です。個人利用・視聴用に自由にダウンロードしてお使いください。
+    </p>
   </section>
 
 </main>
