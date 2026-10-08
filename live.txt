@@ -1,4 +1,4 @@
 # ライブ情報の書き方: 「日付 | 内容」を1行ずつ。
-# 予約を始めるときは、下の行を足してください(先頭の # は付けない)。
-# 予約URL | https://ここにフォームのURL
-準備中 | ライブの予約受付は、近日中に始める予定です
+# 予約をやめるときは、下の「予約URL」の行の先頭に # を付けてください。
+予約URL | https://docs.google.com/forms/d/e/1FAIpQLSfncNUvIOJRr2QzPuKPFsuxfnKfMR3Xpr2cRAGa7UgDOX4Vvw/viewform
+試験運用 | ライブの予約を、試験的に受け付けています
