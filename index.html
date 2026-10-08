@@ -436,6 +436,25 @@
 </footer>
 
 <script>
+// 文章の中の https:// から始まるアドレスを、押せるリンクにする(textContentで安全に組み立てる)
+function addLinkedText(el, text) {
+  var re = /https:\/\/[\x21-\x7E]+/g;
+  var last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) el.appendChild(document.createTextNode(text.slice(last, m.index)));
+    var a = document.createElement('a');
+    a.href = m[0];
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = '地図・リンクを開く';
+    el.appendChild(a);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+}
+</script>
+
+<script>
 (function () {
   var LIMIT = 5;
   var section = document.getElementById('news');
@@ -474,7 +493,7 @@
       }
       var t = document.createElement('span');
       t.className = 'news-text';
-      t.textContent = it.text;
+      addLinkedText(t, it.text);
       li.appendChild(t);
       list.appendChild(li);
     });
@@ -530,7 +549,7 @@
       }
       var t = document.createElement('span');
       t.className = 'news-text';
-      t.textContent = it.text;
+      addLinkedText(t, it.text);
       li.appendChild(t);
       list.appendChild(li);
     });
